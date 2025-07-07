@@ -1,0 +1,7 @@
+- name: configuring mongodb server
+  hosts: mongodb
+  tasks:
+  - name: copying mongodb repo
+    ansible.builtin.copy:
+    src: mongo.repo
+    dest: 
