@@ -1,6 +1,6 @@
 - name: configuring catalogue server
   hosts: catalogue
-  becomes: yes
+  become: yes
   tasks: 
 
   - name: disable nodejs module
@@ -31,12 +31,39 @@
       url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
       dest: /tmp/catalogue.zip
 
+ 
+ #zthis module thinks file exists on ansible control server ,needs to extract on to remote machine
   - name: extracting 
     ansible.builtin.unarchive:
       src: /tmp/catalogue.zip
       dest: /app
+      remote_src: yes #file already exists in catalogue server
 
 
-  
+  - name: dependencies
+    community.general.npm:
+      path: /app/
 
-   
+
+  - name: copying systemctl service file
+    ansible.builtin.service:
+      src: catalogue.service
+      dest: /etc/systemd/system/catalogue.service
+
+
+  - name: daemond reload
+    ansible.builtin.systemd_service:
+      daemon_reload: true
+
+  - name: starting the service
+    ansible.builtin.service:
+      name: catalogue
+      enabled: yes
+      state: started
+      
+
+  - name: load products data
+    community.mongodb.mongodb_shell:
+      file: /app/db/master-data.js
+      idempotent: yes
+      login_host: mongodb.raheemweb.fun
