@@ -46,7 +46,7 @@
 
 
   - name: copying systemctl service file
-    ansible.builtin.service:
+    ansible.builtin.copy:
       src: catalogue.service
       dest: /etc/systemd/system/catalogue.service
 
