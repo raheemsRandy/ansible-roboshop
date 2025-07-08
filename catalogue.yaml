@@ -60,8 +60,13 @@
       name: catalogue
       enabled: yes
       state: started
-      
 
+  - name: copying mongodb repo
+    ansible.builtin.copy:
+      src: mongo.repo
+      dest: /etc/yum.repos.d/mongo.repo
+
+      
   - name: load products data
     community.mongodb.mongodb_shell:
       file: /app/db/master-data.js
