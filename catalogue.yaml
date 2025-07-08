@@ -33,7 +33,10 @@
 
   - name: extracting 
     ansible.builtin.unarchive:
-      src: 
-      dest: 
+      src: /tmp/catalogue.zip
+      dest: /app
+
+
+  
 
    
