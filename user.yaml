@@ -27,23 +27,23 @@
       path: /app/
 
 
-  - name: download user code 
-    ansible.builtin.get_url:
-      url: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
-      dest: /tmp/user.zip
-
-  # - name: download user code and unzip
-  #   ansible.builtin.unarchive:
-  #     src: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
+  # - name: download user code 
+  #   ansible.builtin.get_url:
+  #     url: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
   #     dest: /tmp/user.zip
-  #     remote_src: yes
 
-
-  - name: unzipping
+  - name: download user code and unzip
     ansible.builtin.unarchive:
-      src: /tmp/user.zip
-      dest: /app/
+      src: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip 
+      dest: /tmp/user.zip
       remote_src: yes
+
+
+  # - name: unzipping
+  #   ansible.builtin.unarchive:
+  #     src: /tmp/user.zip
+  #     dest: /app/
+  #     remote_src: yes
 
 
   - name: dependencies installation
