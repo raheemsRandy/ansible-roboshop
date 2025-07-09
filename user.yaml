@@ -10,6 +10,7 @@
 
   - name: installing nodejs
     ansible.builtin.dnf:
+      name: npm
       state: present
 
 
@@ -47,7 +48,6 @@
 
   - name: dependencies installation
     community.general.npm:
-      name: npm
       path: /app/
 
 
